@@ -1,0 +1,5 @@
+C:\dev\pivotal-csharp-wrapper\PivotalTrackerAPIClient.Tests\bin\Debug\PivotalTrackerAPIClient.Tests.dll
+C:\dev\pivotal-csharp-wrapper\PivotalTrackerAPIClient.Tests\bin\Debug\PivotalTrackerAPIClient.Tests.pdb
+C:\dev\pivotal-csharp-wrapper\PivotalTrackerAPIClient.Tests\obj\Debug\ResolveAssemblyReference.cache
+C:\dev\pivotal-csharp-wrapper\PivotalTrackerAPIClient.Tests\obj\Debug\PivotalTrackerAPIClient.Tests.dll
+C:\dev\pivotal-csharp-wrapper\PivotalTrackerAPIClient.Tests\obj\Debug\PivotalTrackerAPIClient.Tests.pdb
