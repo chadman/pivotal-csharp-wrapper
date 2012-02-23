@@ -1,0 +1,42 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<TestRun id="bdeda5a2-c8eb-41e7-9051-754235e9da8d" name="chadillac@CHADILLAC-PC 2012-02-23 14:59:24" runUser="chadillac-PC\chadillac" xmlns="http://microsoft.com/schemas/VisualStudio/TeamTest/2010">
+  <TestSettings name="Local" id="699621a8-4321-403e-843d-a1c2dba0af3c">
+    <Description>These are default test settings for a local test run.</Description>
+    <Deployment enabled="false" runDeploymentRoot="chadillac_CHADILLAC-PC 2012-02-23 14_59_24">
+      <DeploymentItem filename="C:\dev\pivotal-csharp-wrapper\PivotalTrackerAPIClient\bin\Debug\PivotalTrackerAPIClient.dll" />
+    </Deployment>
+    <Execution>
+      <TestTypeSpecific />
+      <AgentRule name="Execution Agents">
+      </AgentRule>
+    </Execution>
+  </TestSettings>
+  <Times creation="2012-02-23T14:59:24.4404296-06:00" queuing="2012-02-23T14:59:24.4736328-06:00" start="2012-02-23T14:59:24.4775390-06:00" finish="2012-02-23T14:59:25.8798828-06:00" />
+  <ResultSummary outcome="Completed">
+    <Counters total="2" executed="2" passed="2" error="0" failed="0" timeout="0" aborted="0" inconclusive="0" passedButRunAborted="0" notRunnable="0" notExecuted="0" disconnected="0" warning="0" completed="0" inProgress="0" pending="0" />
+  </ResultSummary>
+  <TestDefinitions>
+    <UnitTest name="integration_model_token_check_guid" storage="c:\dev\pivotal-csharp-wrapper\pivotaltrackerapiclient.tests\bin\debug\pivotaltrackerapiclient.tests.dll" id="b783f6d9-05d5-7ef1-b03c-4482826f71d9">
+      <Execution id="f6e42aa4-2324-493b-8ef4-8014fc30db3e" />
+      <TestMethod codeBase="C:/dev/pivotal-csharp-wrapper/PivotalTrackerAPIClient.Tests/bin/Debug/PivotalTrackerAPIClient.Tests.DLL" adapterTypeName="Microsoft.VisualStudio.TestTools.TestTypes.Unit.UnitTestAdapter, Microsoft.VisualStudio.QualityTools.Tips.UnitTest.Adapter, Version=10.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" className="PivotalTrackerAPIClient.Tests.Integration.Model.Token, PivotalTrackerAPIClient.Tests, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null" name="integration_model_token_check_guid" />
+    </UnitTest>
+    <UnitTest name="integration_model_token_get_by_username" storage="c:\dev\pivotal-csharp-wrapper\pivotaltrackerapiclient.tests\bin\debug\pivotaltrackerapiclient.tests.dll" id="7ec89a0f-8fec-7a2d-03e8-e053701c044b">
+      <Execution id="2f40b287-4766-443e-be36-f7bfc4d94c00" />
+      <TestMethod codeBase="C:/dev/pivotal-csharp-wrapper/PivotalTrackerAPIClient.Tests/bin/Debug/PivotalTrackerAPIClient.Tests.DLL" adapterTypeName="Microsoft.VisualStudio.TestTools.TestTypes.Unit.UnitTestAdapter, Microsoft.VisualStudio.QualityTools.Tips.UnitTest.Adapter, Version=10.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" className="PivotalTrackerAPIClient.Tests.Integration.Model.Token, PivotalTrackerAPIClient.Tests, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null" name="integration_model_token_get_by_username" />
+    </UnitTest>
+  </TestDefinitions>
+  <TestLists>
+    <TestList name="Results Not in a List" id="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestList name="All Loaded Results" id="19431567-8539-422a-85d7-44ee4e166bda" />
+  </TestLists>
+  <TestEntries>
+    <TestEntry testId="7ec89a0f-8fec-7a2d-03e8-e053701c044b" executionId="2f40b287-4766-443e-be36-f7bfc4d94c00" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="b783f6d9-05d5-7ef1-b03c-4482826f71d9" executionId="f6e42aa4-2324-493b-8ef4-8014fc30db3e" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+  </TestEntries>
+  <Results>
+    <UnitTestResult executionId="2f40b287-4766-443e-be36-f7bfc4d94c00" testId="7ec89a0f-8fec-7a2d-03e8-e053701c044b" testName="integration_model_token_get_by_username" computerName="CHADILLAC-PC" duration="00:00:00.9184027" startTime="2012-02-23T14:59:24.4794921-06:00" endTime="2012-02-23T14:59:25.5625000-06:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="2f40b287-4766-443e-be36-f7bfc4d94c00">
+    </UnitTestResult>
+    <UnitTestResult executionId="f6e42aa4-2324-493b-8ef4-8014fc30db3e" testId="b783f6d9-05d5-7ef1-b03c-4482826f71d9" testName="integration_model_token_check_guid" computerName="CHADILLAC-PC" duration="00:00:00.2974417" startTime="2012-02-23T14:59:25.5644531-06:00" endTime="2012-02-23T14:59:25.8642578-06:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="f6e42aa4-2324-493b-8ef4-8014fc30db3e">
+    </UnitTestResult>
+  </Results>
+</TestRun>

@@ -1,0 +1,49 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<TestRun id="ef8a0bec-b0b6-4668-8478-69505b5b8d62" name="chadillac@CHADILLAC-PC 2012-02-23 15:10:27" runUser="chadillac-PC\chadillac" xmlns="http://microsoft.com/schemas/VisualStudio/TeamTest/2010">
+  <TestSettings name="Local" id="699621a8-4321-403e-843d-a1c2dba0af3c">
+    <Description>These are default test settings for a local test run.</Description>
+    <Deployment enabled="false" runDeploymentRoot="chadillac_CHADILLAC-PC 2012-02-23 15_10_27">
+      <DeploymentItem filename="C:\dev\pivotal-csharp-wrapper\PivotalTrackerAPIClient\bin\Debug\PivotalTrackerAPIClient.dll" />
+    </Deployment>
+    <Execution>
+      <TestTypeSpecific />
+      <AgentRule name="Execution Agents">
+      </AgentRule>
+    </Execution>
+  </TestSettings>
+  <Times creation="2012-02-23T15:10:27.3154296-06:00" queuing="2012-02-23T15:10:27.5722656-06:00" start="2012-02-23T15:10:27.6025390-06:00" finish="2012-02-23T15:10:29.9052734-06:00" />
+  <ResultSummary outcome="Completed">
+    <Counters total="3" executed="3" passed="3" error="0" failed="0" timeout="0" aborted="0" inconclusive="0" passedButRunAborted="0" notRunnable="0" notExecuted="0" disconnected="0" warning="0" completed="0" inProgress="0" pending="0" />
+  </ResultSummary>
+  <TestDefinitions>
+    <UnitTest name="integration_model_token_get_by_username" storage="c:\dev\pivotal-csharp-wrapper\pivotaltrackerapiclient.tests\bin\debug\pivotaltrackerapiclient.tests.dll" id="7ec89a0f-8fec-7a2d-03e8-e053701c044b">
+      <Execution id="38e9eb29-6caf-4235-b317-00d7379fc5c2" />
+      <TestMethod codeBase="C:/dev/pivotal-csharp-wrapper/PivotalTrackerAPIClient.Tests/bin/Debug/PivotalTrackerAPIClient.Tests.DLL" adapterTypeName="Microsoft.VisualStudio.TestTools.TestTypes.Unit.UnitTestAdapter, Microsoft.VisualStudio.QualityTools.Tips.UnitTest.Adapter, Version=10.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" className="PivotalTrackerAPIClient.Tests.Integration.Model.Token, PivotalTrackerAPIClient.Tests, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null" name="integration_model_token_get_by_username" />
+    </UnitTest>
+    <UnitTest name="integration_model_token_check_guid" storage="c:\dev\pivotal-csharp-wrapper\pivotaltrackerapiclient.tests\bin\debug\pivotaltrackerapiclient.tests.dll" id="b783f6d9-05d5-7ef1-b03c-4482826f71d9">
+      <Execution id="254e66af-ebfc-474d-a0d1-e729f47cc5e7" />
+      <TestMethod codeBase="C:/dev/pivotal-csharp-wrapper/PivotalTrackerAPIClient.Tests/bin/Debug/PivotalTrackerAPIClient.Tests.DLL" adapterTypeName="Microsoft.VisualStudio.TestTools.TestTypes.Unit.UnitTestAdapter, Microsoft.VisualStudio.QualityTools.Tips.UnitTest.Adapter, Version=10.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" className="PivotalTrackerAPIClient.Tests.Integration.Model.Token, PivotalTrackerAPIClient.Tests, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null" name="integration_model_token_check_guid" />
+    </UnitTest>
+    <UnitTest name="integration_model_token_invalid_creds" storage="c:\dev\pivotal-csharp-wrapper\pivotaltrackerapiclient.tests\bin\debug\pivotaltrackerapiclient.tests.dll" id="1c4bca7b-e864-97bb-0f38-77c28cb27023">
+      <Execution id="ade9c8c1-50a2-4876-b90c-4b85ffc5cdbe" />
+      <TestMethod codeBase="C:/dev/pivotal-csharp-wrapper/PivotalTrackerAPIClient.Tests/bin/Debug/PivotalTrackerAPIClient.Tests.DLL" adapterTypeName="Microsoft.VisualStudio.TestTools.TestTypes.Unit.UnitTestAdapter, Microsoft.VisualStudio.QualityTools.Tips.UnitTest.Adapter, Version=10.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" className="PivotalTrackerAPIClient.Tests.Integration.Model.Token, PivotalTrackerAPIClient.Tests, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null" name="integration_model_token_invalid_creds" />
+    </UnitTest>
+  </TestDefinitions>
+  <TestLists>
+    <TestList name="Results Not in a List" id="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestList name="All Loaded Results" id="19431567-8539-422a-85d7-44ee4e166bda" />
+  </TestLists>
+  <TestEntries>
+    <TestEntry testId="7ec89a0f-8fec-7a2d-03e8-e053701c044b" executionId="38e9eb29-6caf-4235-b317-00d7379fc5c2" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="b783f6d9-05d5-7ef1-b03c-4482826f71d9" executionId="254e66af-ebfc-474d-a0d1-e729f47cc5e7" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="1c4bca7b-e864-97bb-0f38-77c28cb27023" executionId="ade9c8c1-50a2-4876-b90c-4b85ffc5cdbe" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+  </TestEntries>
+  <Results>
+    <UnitTestResult executionId="38e9eb29-6caf-4235-b317-00d7379fc5c2" testId="7ec89a0f-8fec-7a2d-03e8-e053701c044b" testName="integration_model_token_get_by_username" computerName="CHADILLAC-PC" duration="00:00:00.8745243" startTime="2012-02-23T15:10:27.6083984-06:00" endTime="2012-02-23T15:10:28.6835937-06:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="38e9eb29-6caf-4235-b317-00d7379fc5c2">
+    </UnitTestResult>
+    <UnitTestResult executionId="254e66af-ebfc-474d-a0d1-e729f47cc5e7" testId="b783f6d9-05d5-7ef1-b03c-4482826f71d9" testName="integration_model_token_check_guid" computerName="CHADILLAC-PC" duration="00:00:00.8819122" startTime="2012-02-23T15:10:28.6845703-06:00" endTime="2012-02-23T15:10:29.5703125-06:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="254e66af-ebfc-474d-a0d1-e729f47cc5e7">
+    </UnitTestResult>
+    <UnitTestResult executionId="ade9c8c1-50a2-4876-b90c-4b85ffc5cdbe" testId="1c4bca7b-e864-97bb-0f38-77c28cb27023" testName="integration_model_token_invalid_creds" computerName="CHADILLAC-PC" duration="00:00:00.3061113" startTime="2012-02-23T15:10:29.5712890-06:00" endTime="2012-02-23T15:10:29.8808593-06:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="ade9c8c1-50a2-4876-b90c-4b85ffc5cdbe">
+    </UnitTestResult>
+  </Results>
+</TestRun>

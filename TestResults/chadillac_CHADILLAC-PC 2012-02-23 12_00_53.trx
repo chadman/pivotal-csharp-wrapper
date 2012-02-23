@@ -1,0 +1,49 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<TestRun id="2042ad43-8849-461d-9517-031883215384" name="chadillac@CHADILLAC-PC 2012-02-23 12:00:53" runUser="chadillac-PC\chadillac" xmlns="http://microsoft.com/schemas/VisualStudio/TeamTest/2010">
+  <TestSettings name="Local" id="699621a8-4321-403e-843d-a1c2dba0af3c">
+    <Description>These are default test settings for a local test run.</Description>
+    <Deployment enabled="false" runDeploymentRoot="chadillac_CHADILLAC-PC 2012-02-23 12_00_53">
+      <DeploymentItem filename="C:\dev\pivotal-csharp-wrapper\PivotalTrackerAPIClient\bin\Debug\PivotalTrackerAPIClient.dll" />
+    </Deployment>
+    <Execution>
+      <TestTypeSpecific />
+      <AgentRule name="Execution Agents">
+      </AgentRule>
+    </Execution>
+  </TestSettings>
+  <Times creation="2012-02-23T12:00:53.3085937-06:00" queuing="2012-02-23T12:00:53.4912109-06:00" start="2012-02-23T12:00:53.5205078-06:00" finish="2012-02-23T12:00:54.6152343-06:00" />
+  <ResultSummary outcome="Failed">
+    <Counters total="2" executed="2" passed="1" error="0" failed="1" timeout="0" aborted="0" inconclusive="0" passedButRunAborted="0" notRunnable="0" notExecuted="0" disconnected="0" warning="0" completed="0" inProgress="0" pending="0" />
+  </ResultSummary>
+  <TestDefinitions>
+    <UnitTest name="integration_authentication_check_guid" storage="c:\dev\pivotal-csharp-wrapper\pivotaltrackerapiclient.tests\bin\debug\pivotaltrackerapiclient.tests.dll" id="3cb1e635-4037-84b8-ddc7-ff7ac9d4d99d">
+      <Execution id="8b32ee56-9177-462a-9a15-15d429eef3a2" />
+      <TestMethod codeBase="C:/dev/pivotal-csharp-wrapper/PivotalTrackerAPIClient.Tests/bin/Debug/PivotalTrackerAPIClient.Tests.DLL" adapterTypeName="Microsoft.VisualStudio.TestTools.TestTypes.Unit.UnitTestAdapter, Microsoft.VisualStudio.QualityTools.Tips.UnitTest.Adapter, Version=10.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" className="PivotalTrackerAPIClient.Tests.Integration.Authentication, PivotalTrackerAPIClient.Tests, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null" name="integration_authentication_check_guid" />
+    </UnitTest>
+    <UnitTest name="integration_authentication_get_by_username" storage="c:\dev\pivotal-csharp-wrapper\pivotaltrackerapiclient.tests\bin\debug\pivotaltrackerapiclient.tests.dll" id="2e466b0d-d78b-9341-073a-26e5e1537195">
+      <Execution id="84d76d9d-c89f-4401-af08-d347532f22c8" />
+      <TestMethod codeBase="C:/dev/pivotal-csharp-wrapper/PivotalTrackerAPIClient.Tests/bin/Debug/PivotalTrackerAPIClient.Tests.DLL" adapterTypeName="Microsoft.VisualStudio.TestTools.TestTypes.Unit.UnitTestAdapter, Microsoft.VisualStudio.QualityTools.Tips.UnitTest.Adapter, Version=10.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" className="PivotalTrackerAPIClient.Tests.Integration.Authentication, PivotalTrackerAPIClient.Tests, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null" name="integration_authentication_get_by_username" />
+    </UnitTest>
+  </TestDefinitions>
+  <TestLists>
+    <TestList name="Results Not in a List" id="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestList name="All Loaded Results" id="19431567-8539-422a-85d7-44ee4e166bda" />
+  </TestLists>
+  <TestEntries>
+    <TestEntry testId="2e466b0d-d78b-9341-073a-26e5e1537195" executionId="84d76d9d-c89f-4401-af08-d347532f22c8" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="3cb1e635-4037-84b8-ddc7-ff7ac9d4d99d" executionId="8b32ee56-9177-462a-9a15-15d429eef3a2" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+  </TestEntries>
+  <Results>
+    <UnitTestResult executionId="84d76d9d-c89f-4401-af08-d347532f22c8" testId="2e466b0d-d78b-9341-073a-26e5e1537195" testName="integration_authentication_get_by_username" computerName="CHADILLAC-PC" duration="00:00:00.4942322" startTime="2012-02-23T12:00:53.5273437-06:00" endTime="2012-02-23T12:00:54.2255859-06:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="84d76d9d-c89f-4401-af08-d347532f22c8">
+    </UnitTestResult>
+    <UnitTestResult executionId="8b32ee56-9177-462a-9a15-15d429eef3a2" testId="3cb1e635-4037-84b8-ddc7-ff7ac9d4d99d" testName="integration_authentication_check_guid" computerName="CHADILLAC-PC" duration="00:00:00.3625848" startTime="2012-02-23T12:00:54.2265625-06:00" endTime="2012-02-23T12:00:54.5927734-06:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Failed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="8b32ee56-9177-462a-9a15-15d429eef3a2">
+      <Output>
+        <ErrorInfo>
+          <Message>Assert.IsTrue failed. </Message>
+          <StackTrace>   at PivotalTrackerAPIClient.Tests.Integration.Authentication.integration_authentication_check_guid() in C:\dev\pivotal-csharp-wrapper\PivotalTrackerAPIClient.Tests\Integration\Authentication.cs:line 20
+</StackTrace>
+        </ErrorInfo>
+      </Output>
+    </UnitTestResult>
+  </Results>
+</TestRun>

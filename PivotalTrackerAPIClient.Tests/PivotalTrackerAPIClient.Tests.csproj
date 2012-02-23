@@ -35,6 +35,7 @@
   <ItemGroup>
     <Reference Include="Microsoft.VisualStudio.QualityTools.UnitTestFramework, Version=10.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL" />
     <Reference Include="System" />
+    <Reference Include="System.configuration" />
     <Reference Include="System.Core">
       <RequiredTargetFramework>3.5</RequiredTargetFramework>
     </Reference>
@@ -46,10 +47,19 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Integration\Model\Token.cs" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Integration\" />
-    <Folder Include="Unit\" />
+    <Folder Include="Unit\Model\" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\PivotalTrackerAPIClient\PivotalTrackerAPIClient.csproj">
+      <Project>{6309EE8F-D9EA-4EA2-97FA-81A743C0847B}</Project>
+      <Name>PivotalTrackerAPIClient</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="App.config" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
