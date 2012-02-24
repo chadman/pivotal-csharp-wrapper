@@ -6,7 +6,7 @@ using System.Text;
 namespace PivotalTrackerAPIClient {
     public class PivotalTrackerAPIClientException : Exception {
 
-        #region Constructor
+		#region Constructor
         public PivotalTrackerAPIClientException(string message)
             : base(message) { 
 

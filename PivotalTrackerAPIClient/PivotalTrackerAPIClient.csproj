@@ -42,8 +42,11 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="BaseResource.cs" />
+    <Compile Include="Context.cs" />
     <Compile Include="Model\Entity\BaseModel.cs" />
-    <Compile Include="PivotalTrackerAPIClientError.cs" />
+    <Compile Include="Model\Entity\Iterations.cs" />
+    <Compile Include="Model\Entity\Memberships.cs" />
+    <Compile Include="PivotalTrackerAPIClientException.cs" />
     <Compile Include="Model\Entity\Projects.cs" />
     <Compile Include="Model\Entity\Token.cs" />
     <Compile Include="PivotalTrackerWebRequest.cs" />
