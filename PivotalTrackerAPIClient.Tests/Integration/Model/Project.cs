@@ -24,6 +24,8 @@ namespace PivotalTrackerAPIClient.Tests.Integration.Model {
         public void integration_project_get_all() {
 
             List<PivotalTrackerAPIClient.Model.Entity.Project> projects = this.PTContext.Projects.GetAll();
+
+			Assert.IsTrue(projects.Count > 0);
         }
     }
 }

@@ -26,6 +26,10 @@ namespace PivotalTrackerAPIClient.Model.Entity {
         #region Constructor
         public BasePivotalTracketSet(string token) {
             this._token = token;
+
+			if (!string.IsNullOrEmpty(this.Token)) {
+				this.WebRequest.Headers.Add("X-TrackerToken", this.Token);
+			}
         }
         #endregion Constructor
     }

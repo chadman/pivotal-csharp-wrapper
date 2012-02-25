@@ -35,6 +35,28 @@ namespace PivotalTrackerAPIClient {
             }
         }
 
+		private Iterations _iterations = null;
+		public Iterations Iterations {
+			get {
+				if (_iterations == null) {
+					this._iterations = new Iterations(this.Token);
+				}
+
+				return this._iterations;
+			}
+		}
+
+		private Stories _stories = null;
+		public Stories Stories {
+			get {
+				if (_stories == null) {
+					this._stories = new Stories(this.Token);
+				}
+				return this._stories;
+			}
+		}
+
+
 
 		#endregion Public Properties
 
