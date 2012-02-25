@@ -9,12 +9,12 @@ namespace PivotalTrackerAPIClient.Tests.Integration.Model {
     [TestClass]
     public class Token {
 
-        #region Public Properties
-        public string UserName { get; set; }
-        public string Password { get; set; }
-        #endregion Public Properties
+		#region Public Properties
+		public string UserName { get; set; }
+		public string Password { get; set; }
+		#endregion Public Properties
 
-        [TestInitialize]
+		[TestInitialize]
         public void Setup() {
             this.UserName = System.Configuration.ConfigurationManager.AppSettings["username"];
             this.Password = System.Configuration.ConfigurationManager.AppSettings["password"];

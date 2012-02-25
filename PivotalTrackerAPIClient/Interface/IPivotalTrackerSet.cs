@@ -6,7 +6,5 @@ using System.Text;
 namespace PivotalTrackerAPIClient {
     public interface IPivotalTrackerSet<T> {
 
-        List<T> GetAll();
-
     }
 }

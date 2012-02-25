@@ -56,6 +56,16 @@ namespace PivotalTrackerAPIClient {
 			}
 		}
 
+		private Tasks _tasks = null;
+		public Tasks Tasks {
+			get {
+				if (_tasks == null) {
+					this._tasks = new Tasks(this.Token);
+				}
+				return this._tasks;
+			}
+		}
+
 
 
 		#endregion Public Properties

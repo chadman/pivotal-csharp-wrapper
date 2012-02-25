@@ -15,10 +15,6 @@ namespace PivotalTrackerAPIClient.Model.Entity {
 
 		#region Public Methods
 
-		public List<Story> GetAll() {
-			return null;
-		}
-
 		public List<Story> GetAll(int projectID) {
 
 			List<Story> stories = new List<Story>();

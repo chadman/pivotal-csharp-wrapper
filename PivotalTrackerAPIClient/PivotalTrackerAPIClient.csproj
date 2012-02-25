@@ -50,6 +50,7 @@
     <Compile Include="Model\Entity\Iteration.cs" />
     <Compile Include="Model\Entity\Membership.cs" />
     <Compile Include="Model\Entity\Story.cs" />
+    <Compile Include="Model\Entity\Task.cs" />
     <Compile Include="PivotalTrackerAPIClientException.cs" />
     <Compile Include="Model\Entity\Project.cs" />
     <Compile Include="Model\Entity\Token.cs" />
