@@ -44,10 +44,12 @@
     <Compile Include="BaseResource.cs" />
     <Compile Include="Context.cs" />
     <Compile Include="Model\Entity\BaseModel.cs" />
+    <Compile Include="Interface\IPivotalTrackerSet.cs" />
+    <Compile Include="Model\Entity\BasePivotalTracketSet.cs" />
     <Compile Include="Model\Entity\Iterations.cs" />
-    <Compile Include="Model\Entity\Memberships.cs" />
+    <Compile Include="Model\Entity\Membership.cs" />
     <Compile Include="PivotalTrackerAPIClientException.cs" />
-    <Compile Include="Model\Entity\Projects.cs" />
+    <Compile Include="Model\Entity\Project.cs" />
     <Compile Include="Model\Entity\Token.cs" />
     <Compile Include="PivotalTrackerWebRequest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

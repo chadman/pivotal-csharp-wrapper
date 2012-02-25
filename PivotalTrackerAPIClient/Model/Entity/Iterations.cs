@@ -5,8 +5,18 @@ using System.Linq;
 using System.Text;
 
 namespace PivotalTrackerAPIClient.Model.Entity {
-	public class Iterations {
-	}
+	public class Iterations : BasePivotalTracketSet, IPivotalTrackerSet<Iteration> {
+
+        #region Constructor
+        public Iterations(string token) : base(token) { }
+        #endregion Constructor
+
+        #region Public Methods
+        public List<Iteration> GetAll() {
+            return null;
+        }
+        #endregion Public Methods
+    }
 
 	public class Iteration {
 		public int ID { get; set; }

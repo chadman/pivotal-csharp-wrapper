@@ -8,24 +8,63 @@ using System.IO;
 namespace PivotalTrackerAPIClient {
     internal class PivotalTrackerWebRequest {
 
+        #region Properties
+        private WebHeaderCollection _headers = null;
+        public WebHeaderCollection Headers {
+            get {
+                if (_headers == null) {
+                    _headers = new WebHeaderCollection();
+                }
+                return _headers;
+            }
+        }
+
+        public string Method { get; set; }
+
+        public string ContentType { get; set; }
+
+        public string Url { get; set; }
+
+        public string Body { get; set; }
+
+        #endregion Properties
+
         #region Public Methods
-        public static HttpWebResponse Create(string method, string contentType, string uri, string body = null) {
+
+        public string GetResponse() {
+
+            string returnValue = string.Empty;
 
             try {
-                HttpWebRequest request = (HttpWebRequest)WebRequest.Create(uri);
+                HttpWebRequest request = (HttpWebRequest)WebRequest.Create(this.Url);
                 request.KeepAlive = false;
-                request.ContentType = contentType;
-                request.Method = method;
+                request.ContentType = this.ContentType;
+                request.Method = this.Method;
+                request.Headers = this.Headers;
 
-                if (!string.IsNullOrEmpty(body)) {
+
+                if (!string.IsNullOrEmpty(this.Body)) {
                     using (var input = request.GetRequestStream()) {
                         using (var txtIn = new StreamWriter(input)) {
-                            txtIn.Write(body);
+                            txtIn.Write(this.Body);
                         }
                     }
                 }
 
-                return (HttpWebResponse)request.GetResponse();
+                HttpWebResponse response = (HttpWebResponse)request.GetResponse();
+
+
+                // Get the stream associated with the response.
+                Stream receiveStream = response.GetResponseStream();
+
+                // Pipes the stream to a higher level stream reader with the required encoding format. 
+                using (StreamReader readStream = new StreamReader(receiveStream, Encoding.UTF8)) {
+
+                    returnValue = readStream.ReadToEnd();
+                }
+
+                receiveStream.Close();
+                response.Close();
             }
             catch (WebException we) {
 
@@ -33,10 +72,14 @@ namespace PivotalTrackerAPIClient {
 
                 PivotalTrackerAPIClientException error = new PivotalTrackerAPIClientException(we.Message);
                 error.StatusCode = (int)response.StatusCode;
+                response.Close();
 
                 throw error;
             }
+
+            return returnValue;
         }
+
         #endregion Public Methods
 
         #region Private Methods

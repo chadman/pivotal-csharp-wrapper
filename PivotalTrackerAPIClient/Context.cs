@@ -15,6 +15,26 @@ namespace PivotalTrackerAPIClient {
 			}
 		}
 
+        private Memberships _memberships = null;
+        public Memberships Memberships {
+            get {
+                if (_memberships == null) {
+                    this._memberships = new Memberships(this.Token);
+                }
+                return this._memberships;
+            }
+        }
+
+        private Projects _projects = null;
+        public Projects Projects {
+            get {
+                if (_projects == null) {
+                    this._projects = new Projects(this.Token);
+                }
+                return this._projects;
+            }
+        }
+
 
 		#endregion Public Properties
 
@@ -23,7 +43,5 @@ namespace PivotalTrackerAPIClient {
 			this._token = token;
 		}
 		#endregion constructor
-
-
 	}
 }

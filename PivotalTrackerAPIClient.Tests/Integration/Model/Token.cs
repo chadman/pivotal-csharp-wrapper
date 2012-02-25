@@ -24,7 +24,6 @@ namespace PivotalTrackerAPIClient.Tests.Integration.Model {
         public void integration_model_token_get_by_username() {
             PivotalTrackerAPIClient.Model.Entity.Token token = PivotalTrackerAPIClient.Model.Entity.Token.Authenticate(this.UserName, this.Password);
             Assert.IsNotNull(token);
-
         }
 
         [TestMethod]

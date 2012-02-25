@@ -29,6 +29,7 @@ namespace PivotalTrackerAPIClient.Model.Entity {
             this.Guid = guid.InnerText;
             this.ID = id.InnerText;
             this.IDType = id.Attributes[0].Value;
+            this.XmlResult = xmlResult;
         }
         #endregion Constructor
 
@@ -57,21 +58,14 @@ namespace PivotalTrackerAPIClient.Model.Entity {
             Token returnToken = null;
 
             string formUserCreds = PivotalTrackerWebRequest.FormEncode("username", username, "password", password);
-            HttpWebResponse tokenResponse = PivotalTrackerWebRequest.Create("POST", "application/x-www-form-urlencoded", "https://www.pivotaltracker.com/services/v3/tokens/active", body: formUserCreds);
 
-            // Get the stream associated with the response.
-            Stream receiveStream = tokenResponse.GetResponseStream();
+            PivotalTrackerWebRequest request = new PivotalTrackerWebRequest();
+            request.Method = "POST";
+            request.ContentType = "application/x-www-form-urlencoded";
+            request.Url = "https://www.pivotaltracker.com/services/v3/tokens/active";
+            request.Body = formUserCreds;
 
-            // Pipes the stream to a higher level stream reader with the required encoding format. 
-            using (StreamReader readStream = new StreamReader(receiveStream, Encoding.UTF8)) {
-
-                string xml = readStream.ReadToEnd();
-
-                returnToken = new Token(xml);
-                returnToken.XmlResult = xml;
-            }
-
-            receiveStream.Close();
+            returnToken = new Token(request.GetResponse());
 
             return returnToken;
         }
