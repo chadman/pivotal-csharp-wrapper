@@ -41,7 +41,6 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="BaseResource.cs" />
     <Compile Include="Context.cs" />
     <Compile Include="Model\Entity\BaseModel.cs" />
     <Compile Include="Interface\IPivotalTrackerSet.cs" />

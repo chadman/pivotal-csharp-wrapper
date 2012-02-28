@@ -17,6 +17,12 @@ namespace PivotalTrackerAPIClient.Model.Entity {
 
 		#region Public Methods
 
+        /// <summary>
+        /// Gets all the stories for a specific project
+        /// </summary>
+        /// <param name="projectID">the project id used to get all stories</param>
+        /// <param name="fetchChildren">Defines if the children (Tasks) should be populated</param>
+        /// <returns>A list of stories</returns>
 		public List<Story> GetAll(int projectID, bool fetchChildren = false) {
 
             List<Story> stories = new List<Story>();
@@ -57,6 +63,13 @@ namespace PivotalTrackerAPIClient.Model.Entity {
 			return stories;
 		}
 
+        /// <summary>
+        /// Gets a specific user story
+        /// </summary>
+        /// <param name="projectID">The project to search in</param>
+        /// <param name="id">The id of the user story</param>
+        /// <param name="fetchChildren">Defines if the children (Tasks) should be populated</param>
+        /// <returns>A story</returns>
         public Story Find(int projectID, int id, bool fetchChildren = false) {
 
             this.WebRequest.ContentType = "application/xml";

@@ -225,9 +225,9 @@ namespace PivotalTrackerAPIClient.Model.Entity {
 							this.Memberships = new List<Membership>();
 
 							XmlDocument membershipXml = new XmlDocument();
-							membershipXml.LoadXml(childNode.InnerXml);
+							membershipXml.LoadXml(childNode.OuterXml);
 
-							XmlNodeList membershipsNodes = membershipXml.SelectNodes("membership");
+							XmlNodeList membershipsNodes = membershipXml.SelectNodes("memberships/membership");
 
 							if (membershipsNodes.Count > 0) {
 								for (int m = 0; m < membershipsNodes.Count; m++) {
