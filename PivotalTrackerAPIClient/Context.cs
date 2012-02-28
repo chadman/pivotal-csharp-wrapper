@@ -19,7 +19,7 @@ namespace PivotalTrackerAPIClient {
         public Memberships Memberships {
             get {
                 if (_memberships == null) {
-                    this._memberships = new Memberships(this.Token);
+                    this._memberships = new Memberships(this._token);
                 }
                 return this._memberships;
             }
@@ -29,7 +29,7 @@ namespace PivotalTrackerAPIClient {
         public Projects Projects {
             get {
                 if (_projects == null) {
-                    this._projects = new Projects(this.Token);
+                    this._projects = new Projects(this._token);
                 }
                 return this._projects;
             }
@@ -65,8 +65,6 @@ namespace PivotalTrackerAPIClient {
 				return this._tasks;
 			}
 		}
-
-
 
 		#endregion Public Properties
 

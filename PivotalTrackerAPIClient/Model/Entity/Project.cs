@@ -6,7 +6,7 @@ using System.Net;
 using System.Xml;
 
 namespace PivotalTrackerAPIClient.Model.Entity {
-    public class Projects : BasePivotalTracketSet, IPivotalTrackerSet<Project> {
+    public class Projects : PivotalTrackerSet<Project>, IPivotalTrackerSet<Project> {
 
         #region Constructor
         public Projects(string token) : base(token) {
@@ -23,10 +23,6 @@ namespace PivotalTrackerAPIClient.Model.Entity {
             this.WebRequest.Url = "http://www.pivotaltracker.com/services/v3/projects";
 
             string returnReponse = this.WebRequest.GetResponse();
-
-            if (returnReponse.IndexOf("<?xml version=\"1.0\" encoding=\"UTF-8\"?>") > -1) {
-                returnReponse = returnReponse.Replace("<?xml version=\"1.0\" encoding=\"UTF-8\"?>", "");
-            }
 
             XmlDocument xmlDoc = new XmlDocument();
 			xmlDoc.PreserveWhitespace = false;
@@ -50,12 +46,38 @@ namespace PivotalTrackerAPIClient.Model.Entity {
 
             return projects;
         }
+
+        public Project Find(int id) {
+
+            this.WebRequest.ContentType = "application/xml";
+            this.WebRequest.Method = "GET";
+            this.WebRequest.Url = string.Format("http://www.pivotaltracker.com/services/v3/projects/{0}", id);
+
+            string returnReponse = this.WebRequest.GetResponse();
+
+            XmlDocument xmlDoc = new XmlDocument();
+            xmlDoc.PreserveWhitespace = false;
+            xmlDoc.LoadXml(returnReponse);
+
+            XmlNode projectNode = xmlDoc.SelectSingleNode("project");
+
+            if (projectNode != null && projectNode.HasChildNodes) {
+                Project newProject = new Project(projectNode);
+                newProject.Token = this.Token;
+                return newProject;
+            }
+
+            return null;
+
+        }
 	}
 
-	public class Project {
+	public class Project : BaseModel {
 
 		#region Constructor
 		public Project(XmlNode xml) {
+
+            this.XmlResult = xml.InnerXml;
 
 			for (int c = 0; c < xml.ChildNodes.Count; c++) {
 

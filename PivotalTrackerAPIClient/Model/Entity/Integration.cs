@@ -6,7 +6,7 @@ using System.Text;
 using System.Xml;
 
 namespace PivotalTrackerAPIClient.Model.Entity {
-	public class Integrations : BasePivotalTracketSet, IPivotalTrackerSet<Integration> {
+	public class Integrations : PivotalTrackerSet<Integration>, IPivotalTrackerSet<Integration> {
 
         #region Constructor
 		public Integrations(string token) : base(token) { }
@@ -19,10 +19,12 @@ namespace PivotalTrackerAPIClient.Model.Entity {
         #endregion Public Methods
     }
 
-	public class Integration {
+	public class Integration : BaseModel {
 
 		#region Constructor
 		public Integration(XmlNode xml) {
+
+            this.XmlResult = xml.InnerXml;
 
 			for (int c = 0; c < xml.ChildNodes.Count; c++) {
 

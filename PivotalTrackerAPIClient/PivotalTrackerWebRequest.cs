@@ -27,6 +27,8 @@ namespace PivotalTrackerAPIClient {
 
         public string Body { get; set; }
 
+        public string Token { get; set; }
+
         #endregion Properties
 
         #region Public Methods
@@ -36,23 +38,21 @@ namespace PivotalTrackerAPIClient {
             string returnValue = string.Empty;
 
             try {
-                HttpWebRequest request = (HttpWebRequest)WebRequest.Create(this.Url);
-                request.KeepAlive = false;
+                HttpWebRequest request = (HttpWebRequest)WebRequest.Create(this.Url + "?token=" + this.Token);
                 request.ContentType = this.ContentType;
                 request.Method = this.Method;
-                request.Headers = this.Headers;
-
 
                 if (!string.IsNullOrEmpty(this.Body)) {
+
+                    byte[] byteArray = Encoding.UTF8.GetBytes(this.Body);
+                    request.ContentLength = byteArray.Length;
+
                     using (var input = request.GetRequestStream()) {
-                        using (var txtIn = new StreamWriter(input)) {
-                            txtIn.Write(this.Body);
-                        }
+                        input.Write(byteArray, 0, byteArray.Length);
                     }
                 }
 
                 HttpWebResponse response = (HttpWebResponse)request.GetResponse();
-
 
                 // Get the stream associated with the response.
                 Stream receiveStream = response.GetResponseStream();
@@ -70,7 +70,16 @@ namespace PivotalTrackerAPIClient {
 
                 HttpWebResponse response = ((System.Net.HttpWebResponse)(we.Response));
 
+                // Get the stream associated with the response.
+                Stream receiveStream = response.GetResponseStream();
+
+                // Pipes the stream to a higher level stream reader with the required encoding format. 
+                using (StreamReader readStream = new StreamReader(receiveStream, Encoding.UTF8)) {
+                    returnValue = readStream.ReadToEnd();
+                }
+
                 PivotalTrackerAPIClientException error = new PivotalTrackerAPIClientException(we.Message);
+                error.ErrorXml = returnValue;
                 error.StatusCode = (int)response.StatusCode;
                 response.Close();
 

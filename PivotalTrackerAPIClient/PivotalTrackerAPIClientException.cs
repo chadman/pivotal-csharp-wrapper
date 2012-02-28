@@ -15,6 +15,7 @@ namespace PivotalTrackerAPIClient {
 
         #region Properties
         public int StatusCode { get; set; }
+        public string ErrorXml { get; set; }
         #endregion Properties
     }
 }

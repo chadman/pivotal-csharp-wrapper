@@ -5,22 +5,72 @@ using System.Text;
 using System.Xml;
 
 namespace PivotalTrackerAPIClient.Model.Entity {
-	public class Memberships : BasePivotalTracketSet, IPivotalTrackerSet<Membership> {
+	public class Memberships : PivotalTrackerSet<Membership>, IPivotalTrackerSet<Membership> {
 
         #region Constructor
         public Memberships(string token) : base(token) { }
         #endregion Constructor
 
-        public List<Membership> GetAll() {
-            return null;
+        public List<Membership> GetAll(int projectID) {
+
+            List<Membership> memberships = new List<Membership>();
+
+            this.WebRequest.ContentType = "application/xml";
+            this.WebRequest.Method = "GET";
+            this.WebRequest.Url = string.Format("http://www.pivotaltracker.com/services/v3/projects/{0}/memberships", projectID);
+
+            string returnReponse = this.WebRequest.GetResponse();
+
+            XmlDocument xmlDoc = new XmlDocument();
+            xmlDoc.PreserveWhitespace = false;
+            xmlDoc.LoadXml(returnReponse);
+
+            XmlNodeList membershipsNodes = xmlDoc.SelectNodes("memberships/membership");
+
+            if (membershipsNodes.Count > 0) {
+
+                for (int i = 0; i < membershipsNodes.Count; i++) {
+
+                    XmlDocument membershipDoc = new XmlDocument();
+                    membershipDoc.LoadXml(membershipsNodes.Item(i).OuterXml);
+
+                    Membership currentMembership = PivotalTrackerAPIClient.Util.XmlSerialization.DeserializeFromXmlDocument<Membership>(membershipDoc);
+                    currentMembership.Token = this.Token;
+                    currentMembership.XmlResult = membershipsNodes.Item(i).OuterXml;
+                    memberships.Add(currentMembership);
+                }
+            }
+
+            return memberships;
+        }
+
+        public Membership Find(int projectID, int id) {
+
+            this.WebRequest.ContentType = "application/xml";
+            this.WebRequest.Method = "GET";
+            this.WebRequest.Url = string.Format("http://www.pivotaltracker.com/services/v3/projects/{0}/memberships/{1}", projectID, id);
+
+            string returnReponse = this.WebRequest.GetResponse();
+
+            XmlDocument xmlDoc = new XmlDocument();
+            xmlDoc.PreserveWhitespace = false;
+            xmlDoc.LoadXml(returnReponse);
+
+            Membership returnMembership = PivotalTrackerAPIClient.Util.XmlSerialization.DeserializeFromXmlDocument<Membership>(xmlDoc);
+            returnMembership.Token = this.Token;
+            returnMembership.XmlResult = returnReponse;
+
+            return returnMembership;
         }
 	}
 
-	public class Membership {
+	public class Membership : BaseModel {
 
 		#region Constructor
 
 		public Membership(XmlNode xml) {
+
+            this.XmlResult = xml.InnerXml;
 
 			for (int c = 0; c < xml.ChildNodes.Count; c++) {
 

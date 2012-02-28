@@ -2,9 +2,10 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Xml;
 
 namespace PivotalTrackerAPIClient.Model.Entity {
-    public class BasePivotalTracketSet {
+    public class PivotalTrackerSet<TEntity> where TEntity : class {
 
         #region Properties
         private string _token = string.Empty;
@@ -17,6 +18,7 @@ namespace PivotalTrackerAPIClient.Model.Entity {
             get {
                 if (_webRequest == null) {
                     _webRequest = new PivotalTrackerWebRequest();
+                    _webRequest.Token = this.Token;
                 }
                 return _webRequest;
             }
@@ -24,13 +26,13 @@ namespace PivotalTrackerAPIClient.Model.Entity {
         #endregion Properties
 
         #region Constructor
-        public BasePivotalTracketSet(string token) {
+        public PivotalTrackerSet(string token) {
             this._token = token;
-
-			if (!string.IsNullOrEmpty(this.Token)) {
-				this.WebRequest.Headers.Add("X-TrackerToken", this.Token);
-			}
         }
         #endregion Constructor
+
+        #region Methods
+
+        #endregion Methods
     }
 }

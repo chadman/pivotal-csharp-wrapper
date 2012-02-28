@@ -6,7 +6,7 @@ using System.Xml;
 
 namespace PivotalTrackerAPIClient.Model.Entity {
 
-	public class Iterations : BasePivotalTracketSet, IPivotalTrackerSet<Iteration> {
+	public class Iterations : PivotalTrackerSet<Iteration>, IPivotalTrackerSet<Iteration> {
 
 		#region Constructor
 		public Iterations(string token) : base(token) { }
@@ -58,10 +58,12 @@ namespace PivotalTrackerAPIClient.Model.Entity {
 		#endregion Public Methods
 	}
 
-	public class Iteration {
+	public class Iteration : BaseModel {
 
 		#region Constructor
 		public Iteration(XmlNode xml) {
+
+            this.XmlResult = xml.InnerXml;
 
 			for (int c = 0; c < xml.ChildNodes.Count; c++) {
 
@@ -121,14 +123,14 @@ namespace PivotalTrackerAPIClient.Model.Entity {
 					case "stories":
 
 						if (!string.IsNullOrWhiteSpace(childNode.InnerXml)) {
-
-							this.Stories = new List<Story>();
-
+                            this.Stories = new List<Story>();
 							XmlNodeList storiesNodes = childNode.SelectNodes("story");
 
 							if (storiesNodes.Count > 0) {
 								for (int m = 0; m < storiesNodes.Count; m++) {
-									this.Stories.Add(new Story(storiesNodes[m]));
+                                    XmlDocument storyXml = new XmlDocument();
+                                    storyXml.LoadXml(storiesNodes[m].OuterXml);
+									this.Stories.Add(PivotalTrackerAPIClient.Util.XmlSerialization.DeserializeFromXmlDocument<Story>(storyXml));
 								}
 							}
 						}

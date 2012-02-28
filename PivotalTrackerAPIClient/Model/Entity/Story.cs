@@ -3,9 +3,11 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Xml;
+using System.Xml.Serialization;
 
 namespace PivotalTrackerAPIClient.Model.Entity {
-	public class Stories : BasePivotalTracketSet, IPivotalTrackerSet<Story> {
+
+    public class Stories : PivotalTrackerSet<Story>, IPivotalTrackerSet<Story> {
 
 		#region Constructor
 		public Stories(string token) : base(token) { 
@@ -15,19 +17,15 @@ namespace PivotalTrackerAPIClient.Model.Entity {
 
 		#region Public Methods
 
-		public List<Story> GetAll(int projectID) {
+		public List<Story> GetAll(int projectID, bool fetchChildren = false) {
 
-			List<Story> stories = new List<Story>();
+            List<Story> stories = new List<Story>();
 
 			this.WebRequest.ContentType = "application/xml";
 			this.WebRequest.Method = "GET";
 			this.WebRequest.Url = string.Format("http://www.pivotaltracker.com/services/v3/projects/{0}/stories", projectID);
 
 			string returnReponse = this.WebRequest.GetResponse();
-
-			if (returnReponse.IndexOf("<?xml version=\"1.0\" encoding=\"UTF-8\"?>") > -1) {
-				returnReponse = returnReponse.Replace("<?xml version=\"1.0\" encoding=\"UTF-8\"?>", "");
-			}
 
 			XmlDocument xmlDoc = new XmlDocument();
 			xmlDoc.PreserveWhitespace = false;
@@ -39,146 +37,223 @@ namespace PivotalTrackerAPIClient.Model.Entity {
 
 				for (int i = 0; i < storiesNodes.Count; i++) {
 
-					XmlNode storyNode = storiesNodes.Item(i);
+                    XmlDocument storyDoc = new XmlDocument();
+                    storyDoc.LoadXml(storiesNodes.Item(i).OuterXml);
 
-					if (storyNode != null && storyNode.HasChildNodes) {
+                    Story currentStory = PivotalTrackerAPIClient.Util.XmlSerialization.DeserializeFromXmlDocument<Story>(storyDoc);
+                    currentStory.Token = this.Token;
+                    currentStory.XmlResult = storiesNodes.Item(i).OuterXml;
 
-						Story currentStory = new Story(storyNode);
-						stories.Add(currentStory);
-					}
+                    if (fetchChildren) {
+                        // Get all the tasks for the current story
+                        Tasks taskContext = new Tasks(this.Token);
+                        currentStory.Tasks = taskContext.GetAll(currentStory.ProjectID, currentStory.ID);
+                    }
+
+                    stories.Add(currentStory);
 				}
 			}
 
 			return stories;
 		}
 
-		public Story Find(int projectID, int id) {
+        public Story Find(int projectID, int id, bool fetchChildren = false) {
 
-			this.WebRequest.ContentType = "application/xml";
-			this.WebRequest.Method = "GET";
-			this.WebRequest.Url = string.Format("http://www.pivotaltracker.com/services/v3/projects/{0}/stories/{1}", projectID, id);
+            this.WebRequest.ContentType = "application/xml";
+            this.WebRequest.Method = "GET";
+            this.WebRequest.Url = string.Format("http://www.pivotaltracker.com/services/v3/projects/{0}/stories/{1}", projectID, id);
 
-			string returnReponse = this.WebRequest.GetResponse();
+            string returnReponse = this.WebRequest.GetResponse();
 
-			if (returnReponse.IndexOf("<?xml version=\"1.0\" encoding=\"UTF-8\"?>") > -1) {
-				returnReponse = returnReponse.Replace("<?xml version=\"1.0\" encoding=\"UTF-8\"?>", "");
-			}
+            XmlDocument xmlDoc = new XmlDocument();
+            xmlDoc.PreserveWhitespace = false;
+            xmlDoc.LoadXml(returnReponse);
 
-			XmlDocument xmlDoc = new XmlDocument();
-			xmlDoc.PreserveWhitespace = false;
-			xmlDoc.LoadXml(returnReponse);
+            Story returnedStory = PivotalTrackerAPIClient.Util.XmlSerialization.DeserializeFromXmlDocument<Story>(xmlDoc);
+            returnedStory.Token = this.Token;
+            returnedStory.XmlResult = returnReponse;
 
-			XmlNode storyNode = xmlDoc.SelectSingleNode("story");
+            if (fetchChildren) {
+                // Get all the tasks for the current story
+                Tasks taskContext = new Tasks(this.Token);
+                returnedStory.Tasks = taskContext.GetAll(returnedStory.ProjectID, returnedStory.ID);
+            }
 
-			if (storyNode != null && storyNode.HasChildNodes) {
-				return new Story(storyNode);
-			}
-
-			return null;
-			
-		}
+            return returnedStory;
+        }
 		#endregion Public Methods
-
 	}
 
-	public class Story {
+    [XmlRoot("story")]
+	public class Story : BaseModel {
 
 		#region Constructor
-		public Story(XmlNode xml) {
+        public Story() {
+            this.StoryType = "feature";
+        }
 
-			for (int c = 0; c < xml.ChildNodes.Count; c++) {
-
-				XmlNode childNode = xml.ChildNodes.Item(c);
-
-				switch (childNode.Name) {
-					case "id":
-
-						int id = 0;
-
-						if (int.TryParse(childNode.InnerText, out id)) {
-							this.ID = id;
-						}
-
-						break;
-					case "project_id":
-
-						int projectID = 0;
-
-						if (int.TryParse(childNode.InnerText, out projectID)) {
-							this.ProjectID = projectID;
-						}
-
-						break;
-					case "story_type":
-
-						this.StoryType = childNode.InnerText;
-						break;
-
-					case "url":
-						this.Url = childNode.InnerText;
-						break;
-
-					case "estimate":
-
-						int estimate = 0;
-
-						if (int.TryParse(childNode.InnerText, out estimate)) {
-							this.Estimate = estimate;
-						}
-
-						break;
-					case "current_state":
-						this.CurrentState = childNode.InnerText;
-						break;
-
-					case "description":
-						this.Description = childNode.InnerText;
-						break;
-					case "name":
-						this.Name = childNode.InnerText;
-						break;
-					case "request_by":
-						this.RequestedBy = childNode.InnerText;
-						break;
-					case "owned_by":
-						this.OwnedBy = childNode.InnerText;
-						break;
-					case "created_at":
-						
-						DateTime createdAt = new DateTime();
-
-						if (DateTime.TryParse(childNode.InnerText, out createdAt)) {
-							this.CreatedAt = createdAt;
-						}
-
-						break;
-					case "accept_at":
-
-						DateTime acceptAt = new DateTime();
-
-						if (DateTime.TryParse(childNode.InnerText, out acceptAt)) {
-							this.AcceptedAt = acceptAt;
-						}
-
-						break;
-				}
-			}
-		}
+        public Story(string token) : this() {
+            this.Token = token;
+        }
 		#endregion Constructor
 
 		#region Properties
+        private string _creationDateString;
+        private string _acceptedDateString;
+
+        [XmlElement("id")]
 		public int ID { get; set; }
+
+        [XmlElement("project_id")]
 		public int ProjectID { get; set; }
+
+        [XmlElement("story_type")]
 		public string StoryType { get; set; }
+        [XmlElement("url", IsNullable = true)]
 		public string Url { get; set; }
+        [XmlElement("estimate", IsNullable = true)]
 		public int? Estimate { get; set; }
+        [XmlElement("current_state", IsNullable = true)]
 		public string CurrentState { get; set; }
+        [XmlElement("description", IsNullable = true)]
 		public string Description { get; set; }
+        [XmlElement("name", IsNullable = true)]
 		public string Name { get; set; }
+        [XmlElement("requested_by", IsNullable = true)]
 		public string RequestedBy { get; set; }
+        [XmlElement("owned_by", IsNullable = true)]
 		public string OwnedBy { get; set; }
-		public DateTime? CreatedAt { get; set; }
-		public DateTime? AcceptedAt { get; set; }
-		#endregion Properties
-	}
+
+        /// <summary>
+        /// The date the story was created (as the original string from Pivotal).  Use CreationDate for the DateTime value
+        /// </summary>
+        [XmlElement("created_at", IsNullable = true)]
+        public string CreationDateString {
+            get {
+                return _creationDateString;
+            }
+            set {
+                _creationDateString = value;
+                if (value != null && value.Length > 4) {
+                    try {
+                        CreatedAt = DateTime.ParseExact(value.Substring(0, value.Length - 4), "yyyy/MM/dd hh:mm:ss", new System.Globalization.CultureInfo("en-US", true), System.Globalization.DateTimeStyles.NoCurrentDateDefault);
+                    }
+                    catch {
+                        CreatedAt = new DateTime();
+                    }
+                }
+                else
+                    CreatedAt = new DateTime();
+            }
+        }
+
+        /// <summary>
+        /// The date the story was accepted (as the original string from Pivotal)
+        /// </summary>
+        [XmlElement("accepted_at", IsNullable = true)]
+        public string AcceptedDateString {
+            get {
+                return _acceptedDateString;
+            }
+            set {
+                _acceptedDateString = value;
+                if (value != null && value.Length > 4) {
+                    try {
+                        AcceptedAt = DateTime.ParseExact(value.Substring(0, value.Length - 4), "yyyy/MM/dd hh:mm:ss", new System.Globalization.CultureInfo("en-US", true), System.Globalization.DateTimeStyles.NoCurrentDateDefault);
+                    }
+                    catch {
+                        AcceptedAt = new DateTime();
+                    }
+                }
+                else
+                    AcceptedAt = new DateTime();
+            }
+        }
+
+        #region Non Pivotal Tracker Properties
+        [XmlIgnore]
+        public DateTime? CreatedAt { get; set; }
+        [XmlIgnore]
+        public DateTime? AcceptedAt { get; set; }
+
+        [XmlIgnore]
+        public List<Task> Tasks { get; set; }
+        #endregion Non Pivotal Tracker Properties
+        #endregion Properties
+
+        #region Public Methods
+        public void Save() {
+
+            // If the project id is null then we need to throw an error
+            if (this.ProjectID <= 0) {
+                throw new Exception("The project ID is required to save a story.");
+            }
+
+            if (this.ID > 0) {
+                this.Update();
+            }
+            else {
+                this.Create();
+            }
+        }
+
+        public void Delete() {
+
+            this.WebRequest.ContentType = "application/xml";
+            this.WebRequest.Method = "DELETE";
+            this.WebRequest.Url = string.Format("http://www.pivotaltracker.com/services/v3/projects/{0}/stories/{1}", this.ProjectID, this.ID);
+
+            string response = this.WebRequest.GetResponse();
+        }
+        #endregion Public Methods
+
+        #region Private Methods
+        private void Update() {
+
+            this.WebRequest.ContentType = "application/xml";
+            this.WebRequest.Method = "PUT";
+            this.WebRequest.Url = string.Format("http://www.pivotaltracker.com/services/v3/projects/{0}/stories/{1}", this.ProjectID, this.ID);
+            this.WebRequest.Body = this.ToXml();
+
+            string returnResponse = this.WebRequest.GetResponse();
+            this.XmlResult = returnResponse;
+        }
+
+        private void Create() {
+
+            this.WebRequest.ContentType = "application/xml";
+            this.WebRequest.Method = "POST";
+            this.WebRequest.Url = string.Format("http://www.pivotaltracker.com/services/v3/projects/{0}/stories", this.ProjectID);
+            this.WebRequest.Body = this.ToXml();
+
+            string returnResponse = this.WebRequest.GetResponse();
+
+            XmlDocument xmlDoc = new XmlDocument();
+            xmlDoc.PreserveWhitespace = false;
+            xmlDoc.LoadXml(returnResponse);
+
+            XmlNode idNode = xmlDoc.SelectSingleNode("story/id");
+            this.ID = int.Parse(idNode.InnerText);
+
+            this.XmlResult = returnResponse;
+        }
+
+        private string ToXml() {
+            
+            // The xml that needs to be uploaded to the pivotal tracker api is different than what the xml serializer would return
+            StringBuilder sb = new StringBuilder();
+
+            sb.Append("<story>");
+
+            sb.Append("<story_type>").Append(this.StoryType).Append("</story_type>");
+            sb.Append("<estimate>").Append(this.Estimate).Append("</estimate>");
+            sb.Append("<description>").Append(this.Description).Append("</description>");
+            sb.Append("<name>").Append(this.Name).Append("</name>");
+            sb.Append("<requested_by>").Append(this.RequestedBy).Append("</requested_by>");
+            sb.Append("</story>");
+
+            return sb.ToString();
+        }
+        #endregion Private Methods
+    }
 }

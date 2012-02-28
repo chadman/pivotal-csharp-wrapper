@@ -3,9 +3,10 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Xml;
+using System.Xml.Serialization;
 
 namespace PivotalTrackerAPIClient.Model.Entity {
-	public class Tasks : BasePivotalTracketSet, IPivotalTrackerSet<Task> {
+	public class Tasks : PivotalTrackerSet<Task>, IPivotalTrackerSet<Task> {
 
 		
 
@@ -25,10 +26,6 @@ namespace PivotalTrackerAPIClient.Model.Entity {
 
 			string returnReponse = this.WebRequest.GetResponse();
 
-			if (returnReponse.IndexOf("<?xml version=\"1.0\" encoding=\"UTF-8\"?>") > -1) {
-				returnReponse = returnReponse.Replace("<?xml version=\"1.0\" encoding=\"UTF-8\"?>", "");
-			}
-
 			XmlDocument xmlDoc = new XmlDocument();
 			xmlDoc.PreserveWhitespace = false;
 			xmlDoc.LoadXml(returnReponse);
@@ -39,13 +36,14 @@ namespace PivotalTrackerAPIClient.Model.Entity {
 
 				for (int i = 0; i < tasksNodes.Count; i++) {
 
-					XmlNode taskNode = tasksNodes.Item(i);
+                    XmlDocument taskDoc = new XmlDocument();
+                    taskDoc.LoadXml(tasksNodes.Item(i).OuterXml);
 
-					if (taskNode != null && taskNode.HasChildNodes) {
-
-						Task currentTask = new Task(taskNode);
-						tasks.Add(currentTask);
-					}
+                    Task currentTask = PivotalTrackerAPIClient.Util.XmlSerialization.DeserializeFromXmlDocument<Task>(taskDoc);
+                    currentTask.Token = this.Token;
+                    currentTask.XmlResult = tasksNodes.Item(i).OuterXml;
+                    tasks.Add(currentTask);
+                    tasks.Add(currentTask);
 				}
 			}
 
@@ -61,10 +59,6 @@ namespace PivotalTrackerAPIClient.Model.Entity {
 
 			string returnReponse = this.WebRequest.GetResponse();
 
-			if (returnReponse.IndexOf("<?xml version=\"1.0\" encoding=\"UTF-8\"?>") > -1) {
-				returnReponse = returnReponse.Replace("<?xml version=\"1.0\" encoding=\"UTF-8\"?>", "");
-			}
-
 			XmlDocument xmlDoc = new XmlDocument();
 			xmlDoc.PreserveWhitespace = false;
 			xmlDoc.LoadXml(returnReponse);
@@ -72,7 +66,15 @@ namespace PivotalTrackerAPIClient.Model.Entity {
 			XmlNode taskNode = xmlDoc.SelectSingleNode("task");
 
 			if (taskNode != null && taskNode.HasChildNodes) {
-				return new Task(taskNode);
+
+                XmlDocument taskDoc = new XmlDocument();
+                taskDoc.LoadXml(taskNode.OuterXml);
+
+                Task currentTask = PivotalTrackerAPIClient.Util.XmlSerialization.DeserializeFromXmlDocument<Task>(taskDoc);
+                currentTask.Token = this.Token;
+                currentTask.XmlResult = taskNode.OuterXml;
+
+                return currentTask;
 			}
 
 			return null;
@@ -80,70 +82,49 @@ namespace PivotalTrackerAPIClient.Model.Entity {
 		}
 	}
 
-	public class Task {
+    [XmlRoot("task")]
+	public class Task : BaseModel {
+
+        private string _creationDateString;
 
 		#region Constructor
-		public Task(XmlNode xml) {
-
-			for (int c = 0; c < xml.ChildNodes.Count; c++) {
-
-				XmlNode childNode = xml.ChildNodes.Item(c);
-
-				switch (childNode.Name) {
-					case "id":
-
-						int id = 0;
-
-						if (int.TryParse(childNode.InnerText, out id)) {
-							this.ID = id;
-						}
-
-						break;
-
-					case "description":
-						this.Description = childNode.InnerText;
-						break;
-
-					case "position":
-
-						int position = 0;
-
-						if (int.TryParse(childNode.InnerText, out position)) {
-							this.Position = position;
-						}
-
-						break;
-
-					case "complete":
-
-						bool complete = false;
-
-						if (bool.TryParse(childNode.InnerText, out complete)) {
-							this.Complete = complete;
-						}
-
-						break;
-
-
-					case "created_at":
-
-						DateTime createdAt = new DateTime();
-
-						if (DateTime.TryParse(childNode.InnerText, out createdAt)) {
-							this.CreatedAt = createdAt;
-						}
-
-						break;
-				}
-			}
-		}
+		public Task() {}
 		#endregion Constructor
 
 		#region Properties
+        [XmlElement("id")]
 		public int ID { get; set; }
+        [XmlElement("description")]
 		public string Description { get; set; }
+        [XmlElement("position")]
 		public int Position { get; set; }
+        [XmlElement("complete")]
 		public bool Complete { get; set; }
+
+        /// <summary>
+        /// The date the task was created (as the original string from Pivotal).  Use CreationDate for the DateTime value
+        /// </summary>
+        [XmlElement("created_at", IsNullable = true)]
+        public string CreationDateString {
+            get {
+                return _creationDateString;
+            }
+            set {
+                _creationDateString = value;
+                if (value != null && value.Length > 4) {
+                    try {
+                        CreatedAt = DateTime.ParseExact(value.Substring(0, value.Length - 4), "yyyy/MM/dd hh:mm:ss", new System.Globalization.CultureInfo("en-US", true), System.Globalization.DateTimeStyles.NoCurrentDateDefault);
+                    }
+                    catch {
+                        CreatedAt = new DateTime();
+                    }
+                }
+                else
+                    CreatedAt = new DateTime();
+            }
+        }
+
+        [XmlIgnore]
 		public DateTime CreatedAt { get; set; }
 		#endregion Properties
 	}
